@@ -1,68 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Sign In | Travel Symphony</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="images/Logos/logo.ico" type="image">
-    <link rel="stylesheet" href="css/login.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Silkscreen&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.outer-box {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to top left, #3ed8ff, #a8f5ff);
+}
+
+.inner-box {
+    width: 400px;
+    margin: 0 auto;
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+    padding: 20px 40px;
+    /* background-color: #ffffff09; */
+    background: linear-gradient(to top left, #ffffffff, #ffffff33);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px #2773a5;
+    /* border: 2px solid black; */
+    z-index: 2;
+}
+
+.signup-header h1 {
+    font-size: 2.5rem;
+    color: #212121;
+}
+
+.signup-header p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 5px;
+}
+
+.signup-body {
+    margin: 20px 0;
+}
+
+.signup-body p {
+    margin: 10px 0;
+}
+
+.signup-body p label {
+    display: block;
+    font-weight: bold;
+}
+
+.signup-body p input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #cccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-top: 4px;
+}
+
+.signup-body p input[type="submit"] {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.signup-body p input[type="submit"]:hover {
+    background-color: #2773a5;
+}
+
+.signup-footer p {
+    color: #555;
+    text-align: center;
+}
+
+.signup-footer p a {
+    color: #2773a5;
+}
+
+.circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    background: linear-gradient(to top right, #ffffff33, #ffffffff);
+    position: absolute;
+}
+
+.c1 {
+    top: 100px;
+    left: 30%;
+}
+
+.c2 {
+    bottom: 200px;
+    right: 40%;
+}
+    </style>
 </head>
+<body>
 
-<body background="Images\bg-01.jpg">
-    <center>
-        <div id="login">
+    <div class="outer-box">
+        <div class="inner-box">
+            <header class="signup-header">
+                <h1>Sign Up</h1>
+            </header>
+            <main class="signup-body">
+                <form action="#">
+                    <p>
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" placeholder="Enter your name" required>
+                    </p>
+                    <p>
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" placeholder="example@gmail.com" required>
+                    </p>
+                    <p>
+                        <label for="password">Your Password</label>
+                        <input type="password" id="password" placeholder="at least 8 characters" required>
+                    </p>
+                    <p>
+                        <input type="submit" id="submit" value="Create Account">
+                    </p>
+                </form>
+            </main>
 
-            <h2 style="font-family: Montserrat">Sign In</h2><br>
+            <footer class="signup-footer">
+                <p>Already have an Account? <a href="login.html" target="Pet">Login</a> </p>
+            </footer>
 
-            <form>
-
-                <p>Username</p>
-                <input type="text" id="email"><br>
-                <p>Password</p>
-                <input type="password" id="pswd"><br><br><br>
-                <a href="index.html" onclick="return validate()" id="button">Sign In</a><br><br>
-                <p style="text-align: center; margin: 30px; font-weight: bold;">OR</p>
-
-                <div id="logos">
-
-                    <a href="index.html" class="fb">                
-                <img src="https://png.icons8.com/ios-glyphs/50/FFFFFF/facebook.png">
-                <span class="text">Facebook</span></a>
-
-                    <a href="index.html" class="google">                
-                <img src="https://png.icons8.com/color/50/000000/google-logo.png">
-                <span class="text">Google</span></a>
-
-                </div>
-
-            </form>
-            
         </div>
-    </center>   
+        <div class="circle c1"></div>
+        <div class="circle c2"></div>
+    </div>
     
-    
-    <script>
-        function validate() {
-            email = document.getElementById('email').value;
-            pswd = document.getElementById('pswd').value;
-            validEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-
-            if (email == '') {
-                alert('Please enter your email.');
-                return false;
-            } else if (validEmail.test(email) == false) {
-                alert('Please enter your email correctly');
-                return false;
-            } else if (pswd == '') {
-                alert('Please enter password.');
-                return false;
-            } else
-                return true;
-        }
-    </script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </body>
-
 </html>
