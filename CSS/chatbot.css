@@ -1,5 +1,8 @@
+/* Import Varela Round font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Varela Round', sans-serif; /* Apply Varela Round */
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
