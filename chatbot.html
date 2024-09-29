@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Itinerary Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #chatbox {
+            margin-top: 20px;
+        }
+
+        #messages {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+
+        #userInput {
+            width: calc(100% - 90px);
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Travel Itinerary Chatbot</h1>
+        <div id="chatbox">
+            <div id="messages"></div>
+            <input type="text" id="userInput" placeholder="Ask for itinerary..." />
+            <button onclick="getItinerary()">Send</button>
+        </div>
+    </div>
+    <script>
+        function getItinerary() {
+            const userInput = document.getElementById("userInput").value.toLowerCase();
+            const messages = document.getElementById("messages");
+
+            // Clear input
+            document.getElementById("userInput").value = '';
+
+            // Add user message
+            messages.innerHTML += `<div><strong>You:</strong> ${userInput}</div>`;
+
+            // Generate itinerary based on user input
+            let itinerary = '';
+            switch (userInput) {
+                case 'mumbai':
+                    itinerary = generateMumbaiItinerary();
+                    break;
+                case 'goa':
+                    itinerary = generateGoaItinerary();
+                    break;
+                case 'bangalore':
+                    itinerary = generateBangaloreItinerary();
+                    break;
+                case 'delhi':
+                    itinerary = generateDelhiItinerary();
+                    break;
+                case 'kochi':
+                    itinerary = generateKochiItinerary();
+                    break;
+                default:
+                    itinerary = 'Please ask for an itinerary for Mumbai, Goa, Bangalore, Delhi, or Kochi.';
+            }
+
+            // Add chatbot response
+            messages.innerHTML += `<div><strong>Chatbot:</strong> ${itinerary}</div>`;
+            messages.scrollTop = messages.scrollHeight; // Scroll to the bottom
+        }
+
+        function generateMumbaiItinerary() {
+            return `**Day 1:** Visit Gateway of India, explore Colaba, and enjoy a ferry ride. \
+                    **Day 2:** Visit Elephanta Caves, Marine Drive, and Chowpatty Beach. \
+                    **Day 3:** Explore the markets of Crawford Market and Fashion Street. \
+                    **Day 4:** Visit Haji Ali Dargah and take a stroll in Juhu Beach. \
+                    **Day 5:** Visit Kanheri Caves and enjoy shopping at Palladium Mall.`;
+        }
+
+        function generateGoaItinerary() {
+            return `**Day 1:** Relax at Baga Beach and enjoy water sports. \
+                    **Day 2:** Visit Fort Aguada and Candolim Beach. \
+                    **Day 3:** Explore Old Goa churches and spice plantations. \
+                    **Day 4:** Enjoy the markets of Anjuna and local cuisine. \
+                    **Day 5:** Visit Palolem Beach and enjoy a sunset cruise.`;
+        }
+
+        function generateBangaloreItinerary() {
+            return `**Day 1:** Visit Lalbagh Botanical Garden and Cubbon Park. \
+                    **Day 2:** Explore Bangalore Palace and Tipu Sultan's Summer Palace. \
+                    **Day 3:** Visit Vidhana Soudha and enjoy shopping at Commercial Street. \
+                    **Day 4:** Explore the nightlife at Indiranagar and Koramangala. \
+                    **Day 5:** Visit Nandi Hills for sunrise and enjoy local cuisine.`;
+        }
+
+        function generateDelhiItinerary() {
+            return `**Day 1:** Visit India Gate, Raj Ghat, and enjoy shopping at Connaught Place. \
+                    **Day 2:** Explore Red Fort and Jama Masjid. \
+                    **Day 3:** Visit Humayun's Tomb and Lotus Temple. \
+                    **Day 4:** Explore Qutub Minar and Hauz Khas Village. \
+                    **Day 5:** Visit Akshardham Temple and enjoy the evening light show.`;
+        }
+
+        function generateKochiItinerary() {
+            
+            return  `**Day 1:** Visit Fort Kochi, Chinese Fishing Nets, and St. Francis Church. \
+                    **Day 2:** Explore Mattancherry Palace and Jewish Synagogue. \
+                    **Day 3:** Visit Marine Drive and enjoy a boat ride. \
+                    **Day 4:** Explore Athirappilly Waterfalls and nearby attractions. \
+                    **Day 5:** Enjoy local cuisine and shopping at Lulu Mall.`;
+        }
+    </script>
+</body>
+</html>
