@@ -5,6 +5,7 @@ body, html {
 }
 
 body {
+    background-color: white; /* Set background to white */
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -12,17 +13,17 @@ body {
 #login {
     width: 45%;
     height: 100%;
-    background: white;
+    background: white; /* Background remains white */
     border-radius: 15px;
     padding: 28px 50px;
     text-align: center;
     margin: 20px 0px;
     margin-top: 25px;
     box-sizing: content-box;
-    box-shadow: 0px 0px 5px #000;
+    box-shadow: 0px 0px 5px teal; /* Set shadow color to teal */
 }
 
-input{
+input {
     width: 100%;
 }
 
@@ -30,6 +31,7 @@ p {
     text-align: left;
     font-family: Montserrat;
     position: static;
+    color: teal; /* Set text color to teal */
 }
 
 input[type=text], input[type=password] {
@@ -41,7 +43,8 @@ input[type=text], input[type=password] {
     font-size: 18px;
     outline: none;
     border-radius: 25px;
-    border: 1px solid #64FFDA;
+    border: 1px solid teal; /* Set input border color to teal */
+    color: teal; /* Set input text color to teal */
 }
 
 #button {
@@ -53,9 +56,9 @@ input[type=text], input[type=password] {
     font-family: Montserrat;
     font-weight: bold;
     border-radius: 5px;
-    border: 1px solid red;
-    background: black;
-    color: white;
+    border: 1px solid teal; /* Set button border color to teal */
+    background: teal; /* Set button background to teal */
+    color: white; /* Set button text color to white */
     -webkit-transition: background-color 0.3s ease-out;
     -moz-transition: background-color 0.3s ease-out;
     -o-transition: background-color 0.3s ease-out;
@@ -63,20 +66,18 @@ input[type=text], input[type=password] {
 }
 
 #button:hover {
-    background-color: red;
+    background-color: #004d4d; /* Darker teal on hover */
 }
 
 input[type=text]:focus, input[type=password]:focus {
-    border: 1px solid #212121;
+    border: 1px solid teal; /* Focus border color set to teal */
 }
 
-
-#login > form > #logos > a{
+#login > form > #logos > a {
     text-decoration: none;
     font-family: Montserrat;
     font-weight: bolder;
-    border: 1px solid none;
-    box-shadow: 0px 0px 9px #000;
+    box-shadow: 0px 0px 9px teal; /* Set shadow color to teal */
     border-radius: 10px;
     padding: 8px;
     margin: 2px;
@@ -88,41 +89,41 @@ input[type=text]:focus, input[type=password]:focus {
 
 #login > form > #logos > .fb {
     color: white;
-    background: #303F9F;
+    background: teal; /* Set background to teal */
 }
 
 #login > form > #logos > .google {
-    color: #004D40;    
+    color: teal; /* Set Google button text color to teal */
 }
 
 #login > form > #logos > .fb:hover {
-    background: linear-gradient(to bottom left, #003366 0%, #ff99cc 100%);
+    background: #004d4d; /* Darker teal on hover */
 }
 
 #login > form > #logos > .google:hover {
     color: white;
-    background: linear-gradient(to bottom left, #003366 0%, #ff99cc 100%);
+    background: #004d4d; /* Darker teal on hover */
 }
 
-
-#login > form > #logos > a > .text{
+#login > form > #logos > a > .text {
     position: relative;
     bottom: 18px;
     left: 10px;
 }
 
-#login > form > #logos > a > img{
+#login > form > #logos > a > img {
     position: relative;
     top: 2px;
     left: -15px;
 }
 
-#login > form > #logos{
+#login > form > #logos {
     display: grid;
-    grid-template-columns: repeat(2,auto);
+    grid-template-columns: repeat(2, auto);
     padding: 10px;
     grid-column-gap: 30px;
 }
 
+/* Font family settings */
 font-family: 'Ubuntu', sans-serif;
 font-family: 'Montserrat', sans-serif;
