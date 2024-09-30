@@ -1,35 +1,37 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan your Travel Itinerary with us! </title>
+    <title>Plan your Travel Itinerary with us!</title>
+
     <!-- Import Varela Round font -->
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 
     <style>
         body {
-            font-family: 'Varela Round', sans-serif; /* Apply Varela Round font */
-            background-color: white; /* White background */
+            font-family: 'Varela Round', sans-serif;
+            background-color: white;
             margin: 0;
             padding: 20px;
-            color: teal; /* Teal text */
+            color: teal;
         }
 
         .container {
             max-width: 600px;
             margin: auto;
-            background: white; /* White container background */
+            background: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
-            border: 2px solid teal; /* Teal border */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid teal;
         }
 
         h1 {
             text-align: center;
-            color: teal; /* Teal heading */
+            color: teal;
         }
 
         #chatbox {
@@ -39,30 +41,30 @@
         #messages {
             height: 300px;
             overflow-y: scroll;
-            border: 1px solid teal; /* Teal border */
+            border: 1px solid teal;
             padding: 10px;
             border-radius: 5px;
-            background: #f9f9f9; /* Light grey background */
-            color: teal; /* Teal text */
+            background: #f9f9f9;
+            color: teal;
         }
 
         #userInput {
             width: calc(100% - 90px);
             padding: 10px;
-            background-color: #f0f0f0; /* Light grey input background */
-            color: teal; /* Teal input text */
-            border: 1px solid teal; /* Teal border */
+            background-color: #f0f0f0;
+            color: teal;
+            border: 1px solid teal;
             border-radius: 5px;
             outline: none;
         }
 
         #userInput::placeholder {
-            color: teal; /* Teal placeholder text */
+            color: teal;
         }
 
         button {
             padding: 10px;
-            background-color: teal; /* Teal button */
+            background-color: teal;
             color: white;
             border: none;
             cursor: pointer;
@@ -71,7 +73,7 @@
         }
 
         button:hover {
-            background-color: #004d4d; /* Darker teal hover */
+            background-color: #004d4d;
         }
 
         .message {
@@ -79,7 +81,7 @@
         }
 
         .message strong {
-            color: teal; /* Teal for strong text */
+            color: teal;
         }
     </style>
 </head>
@@ -145,19 +147,19 @@
 
         // Itinerary functions with detailed information
         function generateMumbaiItinerary() {
-            return `Mumbai Itinerary:<br>
+            return `Mumbai Itinerary for 5 days:<br>
             - Best time to visit: November to February (cooler weather).<br>
             - Day 1: Visit Gateway of India, explore Colaba, and enjoy a ferry ride.<br>
             - Day 2: Visit Elephanta Caves, Marine Drive, and Chowpatty Beach for street food.<br>
             - Day 3: Explore Crawford Market and Fashion Street for shopping.<br>
-            - Day 4: Visit Haji Ali Dargah and stroll along Juhu Beach. <br>
+            - Day 4: Visit Haji Ali Dargah and stroll along Juhu Beach.<br>
             - Day 5: Visit Kanheri Caves and shop at Palladium Mall.<br>
             - Shopping Spots: Linking Road, Colaba Causeway.<br>
             - Food Recommendations: Enjoy Mumbai street food like Vada Pav, Pani Puri, and Pav Bhaji.`;
         }
 
         function generateGoaItinerary() {
-            return `Goa Itinerary:<br>
+            return `Goa Itinerary for 5 days:<br>
             - Best time to visit: November to March (pleasant weather).<br>
             - Day 1: Relax at Baga Beach and enjoy water sports.<br>
             - Day 2: Visit Fort Aguada and Candolim Beach.<br>
@@ -169,7 +171,7 @@
         }
 
         function generateBangaloreItinerary() {
-            return `Bangalore Itinerary:<br>
+            return `Bangalore Itinerary for 5 days:<br>
             - Best time to visit: October to February (pleasant weather).<br>
             - Day 1: Visit Lalbagh Botanical Garden and Cubbon Park.<br>
             - Day 2: Explore Bangalore Palace and Tipu Sultan's Summer Palace.<br>
@@ -181,7 +183,7 @@
         }
 
         function generateDelhiItinerary() {
-            return `Delhi Itinerary:<br>
+            return `Delhi Itinerary for 5 days:<br>
             - Best time to visit: October to March (avoid summer heat).<br>
             - Day 1: Visit India Gate, Raj Ghat, and shop at Connaught Place.<br>
             - Day 2: Explore Red Fort and Jama Masjid.<br>
@@ -193,17 +195,16 @@
         }
 
         function generateKochiItinerary() {
-        return `Kochi Itinerary:<br>
-        - Best time to visit: October to March (pleasant weather).<br>
-        - Day 1: Visit Fort Kochi, see the Chinese Fishing Nets, and St. Francis Church.<br>
-        - Day 2: Explore Mattancherry Palace and the Jewish Synagogue.<br>
-        - Day 3: Stroll along Marine Drive and enjoy a boat ride.<br>
-        - Day 4: Visit Athirappilly Waterfalls and nearby nature spots.<br>
-        - Day 5: Shop at Lulu Mall and try traditional Kerala food.<br>
-        - Shopping Spots: Lulu Mall, Jew Town for antiques.<br>
-        - Food Recommendations: Try Kerala Sadya, Appam with Stew, and seafood dishes.`;
+            return `Kochi Itinerary for 5 days:<br>
+            - Best time to visit: October to March (pleasant weather).<br>
+            - Day 1: Visit Fort Kochi, see the Chinese Fishing Nets, and St. Francis Church.<br>
+            - Day 2: Explore Mattancherry Palace and the Jewish Synagogue.<br>
+            - Day 3: Stroll along Marine Drive and enjoy a boat ride.<br>
+            - Day 4: Visit Athirappilly Waterfalls and nearby nature spots.<br>
+            - Day 5: Shop at Lulu Mall and try traditional Kerala food.<br>
+            - Shopping Spots: Lulu Mall, Jew Town for antiques.<br>
+            - Food Recommendations: Try Kerala Sadya, Appam with Stew, and seafood dishes.`;
         }
-
     </script>
 </body>
 
