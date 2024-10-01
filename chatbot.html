@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +8,7 @@
 
     <!-- Import Varela Round font -->
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
         body {
@@ -27,11 +27,19 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             border: 2px solid teal;
+            position: relative;
         }
 
         h1 {
             text-align: center;
             color: teal;
+        }
+
+        #logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
         }
 
         #chatbox {
@@ -83,21 +91,41 @@
         .message strong {
             color: teal;
         }
+
+        .download-button {
+            margin-top: 10px;
+            display: none; /* Hide initially */
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
+        <img id="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Fr-Kj-gA7laddsdEpP-ULrK0CaSHQYTOzg&s" alt="Logo">
         <h1>Plan your Travel Itinerary with us!</h1>
         <div id="chatbox">
             <div id="messages"></div>
-            <input type="text" id="userInput" placeholder="Ask for itinerary..." onkeypress="handleEnter(event)" />
-            <button onclick="getItinerary()">Send</button>
+            <input type="text" id="userInput" placeholder="Type your response..." onkeypress="handleEnter(event)" />
+            <button onclick="sendMessage()">Send</button>
         </div>
+        <button class="download-button" id="downloadBtn" onclick="downloadPDF()">Download Itinerary as PDF</button>
     </div>
 
     <script>
-        function getItinerary() {
+        const { jsPDF } = window.jspdf; // Access jsPDF from the global window object
+
+        let step = 0; // Track conversation steps
+        let destination = ''; // Store the destination chosen
+        let days = 0; // Store number of days
+        let itineraryContent = ''; // Store itinerary content for PDF
+
+        // Initial message when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            const messages = document.getElementById("messages");
+            messages.innerHTML += `<div class="message"><strong>Itinerary Creator:</strong> Hi! Where would you like to go?</div>`;
+        });
+
+        function sendMessage() {
             const userInput = document.getElementById("userInput").value.toLowerCase();
             const messages = document.getElementById("messages");
 
@@ -111,99 +139,214 @@
             // Add user message
             messages.innerHTML += `<div class="message"><strong>You:</strong> ${userInput}</div>`;
 
-            // Generate itinerary based on user input
-            let itinerary = '';
-            switch (userInput) {
-                case 'mumbai':
-                    itinerary = generateMumbaiItinerary();
-                    break;
-                case 'goa':
-                    itinerary = generateGoaItinerary();
-                    break;
-                case 'bangalore':
-                    itinerary = generateBangaloreItinerary();
-                    break;
-                case 'delhi':
-                    itinerary = generateDelhiItinerary();
-                    break;
-                case 'kochi':
-                    itinerary = generateKochiItinerary();
-                    break;
-                default:
-                    itinerary = 'Please ask for an itinerary for Mumbai, Goa, Bangalore, Delhi, or Kochi.';
+            // Conversation flow based on the step
+            if (step === 0) {
+                destination = userInput;
+                askForDays();
+                step++;
+            } else if (step === 1) {
+                days = parseInt(userInput);
+                if (days === 5 || days === 10) {
+                    generateItinerary(destination, days);
+                    step++;
+                } else {
+                    messages.innerHTML += `<div class="message"><strong>Itinerary Creator:</strong> Please choose either 5 or 10 days for your trip.</div>`;
+                }
             }
 
-            // Add chatbot response
-            messages.innerHTML += `<div class="message"><strong>Chatbot:</strong> ${itinerary}</div>`;
             messages.scrollTop = messages.scrollHeight; // Scroll to the bottom
         }
 
-        // Trigger send on Enter key press
+        function askForDays() {
+            const messages = document.getElementById("messages");
+            messages.innerHTML += `<div class="message"><strong>Itinerary Creator:</strong> Great! How many days will you stay? You can choose 5 or 10 days.</div>`;
+        }
+
+        function generateItinerary(destination, days) {
+            const messages = document.getElementById("messages");
+
+            let itinerary = '';
+            switch (destination) {
+                case 'mumbai':
+                    itinerary = days === 5 ? generateMumbai5DaysItinerary() : generateMumbai10DaysItinerary();
+                    break;
+                case 'goa':
+                    itinerary = days === 5 ? generateGoa5DaysItinerary() : generateGoa10DaysItinerary();
+                    break;
+                case 'bangalore':
+                    itinerary = days === 5 ? generateBangalore5DaysItinerary() : generateBangalore10DaysItinerary();
+                    break;
+                case 'delhi':
+                    itinerary = days === 5 ? generateDelhi5DaysItinerary() : generateDelhi10DaysItinerary();
+                    break;
+                case 'kochi':
+                    itinerary = days === 5 ? generateKochi5DaysItinerary() : generateKochi10DaysItinerary();
+                    break;
+                default:
+                    itinerary = 'Sorry, I currently only provide itineraries for Mumbai, Goa, Bangalore, Delhi, and Kochi.';
+            }
+
+            // Store itinerary content for PDF
+            itineraryContent = itinerary;
+
+            messages.innerHTML += `<div class="message"><strong>Itinerary Creator:</strong> ${itinerary}</div>`;
+            document.getElementById("downloadBtn").style.display = 'block'; // Show download button
+        }
+
+        function downloadPDF() {
+            const pdf = new jsPDF();
+            pdf.text("Your Travel Itinerary", 10, 10);
+            pdf.setFontSize(12);
+            pdf.html(itineraryContent, {
+                callback: function (doc) {
+                    doc.save('itinerary.pdf');
+                },
+                x: 10,
+                y: 20
+            });
+        }
+
+        // Itinerary functions for 5 days and 10 days for each destination
+
+        function generateMumbai5DaysItinerary() {
+            return `Mumbai Itinerary for 5 days:<br>
+                - Day 1: Gateway of India, Colaba.<br>
+                - Day 2: Elephanta Caves, Marine Drive.<br>
+                - Day 3: Crawford Market, Fashion Street.<br>
+                - Day 4: Haji Ali Dargah, Juhu Beach.<br>
+                - Day 5: Kanheri Caves, Palladium Mall.<br>
+                - Shopping Spots: [Link to Linking Road](https://www.google.com/maps/search/?api=1&query=linking+road), [Link to Colaba Causeway](https://www.google.com/maps/search/?api=1&query=colaba+causeway).<br>
+                - Food Recommendations: Enjoy Mumbai street food like Vada Pav, Pani Puri, and Pav Bhaji. [Link to Vada Pav](https://www.google.com/maps/search/?api=1&query=vada+pav).`;
+        }
+
+        function generateMumbai10DaysItinerary() {
+            return `Mumbai Itinerary for 10 days:<br>
+                - Day 1: Gateway of India, Colaba.<br>
+                - Day 2: Elephanta Caves, Marine Drive.<br>
+                - Day 3: Crawford Market, Fashion Street.<br>
+                - Day 4: Haji Ali Dargah, Juhu Beach.<br>
+                - Day 5: Kanheri Caves, Palladium Mall.<br>
+                - Day 6: Sanjay Gandhi National Park.<br>
+                - Day 7: Prince of Wales Museum.<br>
+                - Day 8: Bandra Worli Sea Link.<br>
+                - Day 9: Global Vipassana Pagoda.<br>
+                - Day 10: Explore Dharavi Slum.<br>
+                - Shopping Spots: [Link to Linking Road](https://www.google.com/maps/search/?api=1&query=linking+road), [Link to Colaba Causeway](https://www.google.com/maps/search/?api=1&query=colaba+causeway).<br>
+                - Food Recommendations: Enjoy Mumbai street food like Vada Pav, Pani Puri, and Pav Bhaji. [Link to Vada Pav](https://www.google.com/maps/search/?api=1&query=vada+pav).`;
+        }
+
+        function generateGoa5DaysItinerary() {
+            return `Goa Itinerary for 5 days:<br>
+                - Day 1: Calangute Beach, Baga Beach.<br>
+                - Day 2: Anjuna Beach, Vagator Beach.<br>
+                - Day 3: Aguada Fort, Chapora Fort.<br>
+                - Day 4: Dudhsagar Waterfalls.<br>
+                - Day 5: Old Goa Churches, Panjim Market.<br>
+                - Shopping Spots: Anjuna Flea Market, Panjim Market.<br>
+                - Food Recommendations: Relish Goan seafood and beachside shacks.`;
+        }
+
+        function generateGoa10DaysItinerary() {
+            return `Goa Itinerary for 10 days:<br>
+                - Day 1: Calangute Beach, Baga Beach.<br>
+                - Day 2: Anjuna Beach, Vagator Beach.<br>
+                - Day 3: Aguada Fort, Chapora Fort.<br>
+                - Day 4: Dudhsagar Waterfalls.<br>
+                - Day 5: Old Goa Churches, Panjim Market.<br>
+                - Day 6: Palolem Beach, Agonda Beach.<br>
+                - Day 7: Miramar Beach, Reis Magos Fort.<br>
+                - Day 8: Salim Ali Bird Sanctuary.<br>
+                - Day 9: Divar Island.<br>
+                - Day 10: Fontainhas Latin Quarter.<br>
+                - Shopping Spots: Anjuna Flea Market, Panjim Market.<br>
+                - Food Recommendations: Relish Goan seafood and beachside shacks.`;
+        }
+
+        function generateBangalore5DaysItinerary() {
+            return `Bangalore Itinerary for 5 days:<br>
+                - Day 1: Lalbagh Botanical Garden.<br>
+                - Day 2: Cubbon Park.<br>
+                - Day 3: Bangalore Palace.<br>
+                - Day 4: Nandi Hills.<br>
+                - Day 5: Commercial Street.<br>
+                - Shopping Spots: Commercial Street, Brigade Road.<br>
+                - Food Recommendations: Try the famous South Indian dosas and filter coffee.`;
+        }
+
+        function generateBangalore10DaysItinerary() {
+            return `Bangalore Itinerary for 10 days:<br>
+                - Day 1: Lalbagh Botanical Garden.<br>
+                - Day 2: Cubbon Park.<br>
+                - Day 3: Bangalore Palace.<br>
+                - Day 4: Nandi Hills.<br>
+                - Day 5: Commercial Street.<br>
+                - Day 6: Vidhana Soudha.<br>
+                - Day 7: ISKCON Temple.<br>
+                - Day 8: Bannerghatta National Park.<br>
+                - Day 9: Chunchi Falls.<br>
+                - Day 10: Wonderla Amusement Park.<br>
+                - Shopping Spots: Commercial Street, Brigade Road.<br>
+                - Food Recommendations: Try the famous South Indian dosas and filter coffee.`;
+        }
+
+        function generateDelhi5DaysItinerary() {
+            return `Delhi Itinerary for 5 days:<br>
+                - Day 1: Red Fort, Jama Masjid.<br>
+                - Day 2: India Gate, Rajpath.<br>
+                - Day 3: Qutub Minar, Lotus Temple.<br>
+                - Day 4: Humayun's Tomb.<br>
+                - Day 5: Chandni Chowk.<br>
+                - Shopping Spots: Connaught Place, Sarojini Nagar.<br>
+                - Food Recommendations: Try street food like chole bhature, parathas, and kebabs.`;
+        }
+
+        function generateDelhi10DaysItinerary() {
+            return `Delhi Itinerary for 10 days:<br>
+                - Day 1: Red Fort, Jama Masjid.<br>
+                - Day 2: India Gate, Rajpath.<br>
+                - Day 3: Qutub Minar, Lotus Temple.<br>
+                - Day 4: Humayun's Tomb.<br>
+                - Day 5: Chandni Chowk.<br>
+                - Day 6: Akshardham Temple.<br>
+                - Day 7: Rashtrapati Bhavan.<br>
+                - Day 8: Gurudwara Bangla Sahib.<br>
+                - Day 9: Dilli Haat.<br>
+                - Day 10: Jantar Mantar.<br>
+                - Shopping Spots: Connaught Place, Sarojini Nagar.<br>
+                - Food Recommendations: Try street food like chole bhature, parathas, and kebabs.`;
+        }
+
+        function generateKochi5DaysItinerary() {
+            return `Kochi Itinerary for 5 days:<br>
+                - Day 1: Fort Kochi, Chinese Fishing Nets.<br>
+                - Day 2: Mattancherry Palace, Jew Town.<br>
+                - Day 3: Marine Drive.<br>
+                - Day 4: Hill Palace Museum.<br>
+                - Day 5: Cherai Beach.<br>
+                - Shopping Spots: Lulu Mall, Broadway Market.<br>
+                - Food Recommendations: Savor Kerala seafood and traditional dishes like appam and stew.`;
+        }
+
+        function generateKochi10DaysItinerary() {
+            return `Kochi Itinerary for 10 days:<br>
+                - Day 1: Fort Kochi, Chinese Fishing Nets.<br>
+                - Day 2: Mattancherry Palace, Jew Town.<br>
+                - Day 3: Marine Drive.<br>
+                - Day 4: Hill Palace Museum.<br>
+                - Day 5: Cherai Beach.<br>
+                - Day 6: Athirappilly Waterfalls.<br>
+                - Day 7: Alleppey Backwaters.<br>
+                - Day 8: Munnar Hills.<br>
+                - Day 9: Vypin Island.<br>
+                - Day 10: Andhakaranazhi Beach.<br>
+                - Shopping Spots: Lulu Mall, Broadway Market.<br>
+                - Food Recommendations: Savor Kerala seafood and traditional dishes like appam and stew.`;
+        }
+
         function handleEnter(event) {
             if (event.key === 'Enter') {
-                getItinerary();
+                sendMessage();
             }
-        }
-
-        // Itinerary functions with detailed information
-        function generateMumbaiItinerary() {
-            return `Mumbai Itinerary for 5 days:<br>
-            - Best time to visit: November to February (cooler weather).<br>
-            - Day 1: Visit Gateway of India, explore Colaba, and enjoy a ferry ride.<br>
-            - Day 2: Visit Elephanta Caves, Marine Drive, and Chowpatty Beach for street food.<br>
-            - Day 3: Explore Crawford Market and Fashion Street for shopping.<br>
-            - Day 4: Visit Haji Ali Dargah and stroll along Juhu Beach.<br>
-            - Day 5: Visit Kanheri Caves and shop at Palladium Mall.<br>
-            - Shopping Spots: Linking Road, Colaba Causeway.<br>
-            - Food Recommendations: Enjoy Mumbai street food like Vada Pav, Pani Puri, and Pav Bhaji.`;
-        }
-
-        function generateGoaItinerary() {
-            return `Goa Itinerary for 5 days:<br>
-            - Best time to visit: November to March (pleasant weather).<br>
-            - Day 1: Relax at Baga Beach and enjoy water sports.<br>
-            - Day 2: Visit Fort Aguada and Candolim Beach.<br>
-            - Day 3: Explore Old Goa churches and spice plantations.<br>
-            - Day 4: Shop at Anjuna Flea Market and enjoy Goan seafood.<br>
-            - Day 5: Visit Palolem Beach and enjoy a sunset cruise.<br>
-            - Shopping Spots: Anjuna Flea Market, Mapusa Market.<br>
-            - Food Recommendations: Try Goan fish curry, Bebinca, and Feni.`;
-        }
-
-        function generateBangaloreItinerary() {
-            return `Bangalore Itinerary for 5 days:<br>
-            - Best time to visit: October to February (pleasant weather).<br>
-            - Day 1: Visit Lalbagh Botanical Garden and Cubbon Park.<br>
-            - Day 2: Explore Bangalore Palace and Tipu Sultan's Summer Palace.<br>
-            - Day 3: Visit Vidhana Soudha and shop at Commercial Street.<br>
-            - Day 4: Explore nightlife in Indiranagar and Koramangala.<br>
-            - Day 5: Visit Nandi Hills for sunrise and enjoy local cuisine.<br>
-            - Shopping Spots: Commercial Street, Brigade Road, UB City Mall.<br>
-            - Food Recommendations: Dosa at Vidyarthi Bhavan, Mavalli Tiffin Room (MTR) for local Karnataka cuisine.`;
-        }
-
-        function generateDelhiItinerary() {
-            return `Delhi Itinerary for 5 days:<br>
-            - Best time to visit: October to March (avoid summer heat).<br>
-            - Day 1: Visit India Gate, Raj Ghat, and shop at Connaught Place.<br>
-            - Day 2: Explore Red Fort and Jama Masjid.<br>
-            - Day 3: Visit Humayun's Tomb and Lotus Temple.<br>
-            - Day 4: Explore Qutub Minar and Hauz Khas Village for cafes and nightlife.<br>
-            - Day 5: Visit Akshardham Temple and enjoy the evening light show.<br>
-            - Shopping Spots: Chandni Chowk, Sarojini Nagar Market, Dilli Haat.<br>
-            - Food Recommendations: Try street food like Chole Bhature, Parathas, and Chaat.`;
-        }
-
-        function generateKochiItinerary() {
-            return `Kochi Itinerary for 5 days:<br>
-            - Best time to visit: October to March (pleasant weather).<br>
-            - Day 1: Visit Fort Kochi, see the Chinese Fishing Nets, and St. Francis Church.<br>
-            - Day 2: Explore Mattancherry Palace and the Jewish Synagogue.<br>
-            - Day 3: Stroll along Marine Drive and enjoy a boat ride.<br>
-            - Day 4: Visit Athirappilly Waterfalls and nearby nature spots.<br>
-            - Day 5: Shop at Lulu Mall and try traditional Kerala food.<br>
-            - Shopping Spots: Lulu Mall, Jew Town for antiques.<br>
-            - Food Recommendations: Try Kerala Sadya, Appam with Stew, and seafood dishes.`;
         }
     </script>
 </body>
