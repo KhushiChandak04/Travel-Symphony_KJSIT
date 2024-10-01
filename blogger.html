@@ -1,111 +1,52 @@
+
 <!DOCTYPE html>
-<html>
-<title>Blog | Travel Symphony</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="images/Logos/logo.ico" type="image">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
-<style>
-body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-    .black-background{
-        background-color: rgb(0, 0, 0);
-        color: rgb(255, 255, 255);
-        padding:1px 2px;
-    }
-    .black-background1{
-        background-color: black;
-        color: white;
-        padding:2px 5px;
-        border-radius: 75%;
-    }
-    .opacity{
-        opacity:0.8;
-    }
-    .margin{
-        margin:16px!important;
-    }
-    .card{
-       box-shadow: 0px 2px 5px 0px;
-    }
-    .padding{
-        padding: 8px 16px!important;
-    }
-    .container, .panel {
-        padding: 0.01em 16px;
-    }
-    .disabled, .btn:disabled, .button:disabled {
-        cursor: not-allowed;
-        opacity: 0.3;
-    }
-    .padding-large {
-        padding: 12px 24px!important;
-    }
-    .black, .w3-hover-black:hover {
-        color: #fff!important;
-        background-color: #000!important;
-    }
-    .margin-bottom {
-        margin-bottom: 16px!important;
-    }
-    .margin-top {
-        margin-top: 16px!important;
-    }
-    .dark-grey, .hover-dark-grey:hover {
-        color: #fff!important;
-        background-color: #616161!important;
-    }
-    .padding-32 {
-        padding-top: 32px!important;
-        padding-bottom: 32px!important;
-    }
-    .text-center{
-        text-align: center;
-    }
-    .padding-16 {
-        padding-top: 16px!important;
-        padding-bottom: 16px!important;
-    }
-    .ul li {
-        padding: 8px 16px;
-        border-bottom: 1px solid #ddd;
-    }
-    .ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-    .white, .hover-white:hover {
-        color: #000!important;
-        background-color: #fff!important;
-    }
-    .light-grey {
-        color: #000!important;
-        background-color: #f1f1f1!important;
-    }
-    .tag {
-        background-color: #000;
-        color: #fff;
-        display: inline-block;
-        padding-left: 8px;
-        padding-right: 8px;
-        text-align: center;
-    }
-</style>
+<html lang="en">
+<head>
+    <title>Blog | Travel Symphony</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/Logos/logo.ico" type="image">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Montserrat:500" rel="stylesheet">
+    <style>
+        body, h1, h2, h3, h4, h5 {font-family: "Raleway", sans-serif;}
+        .black-background {background-color: rgb(0, 0, 0); color: rgb(255, 255, 255); padding: 1px 2px;}
+        .opacity {opacity: 0.8;}
+        .margin {margin: 16px!important;}
+        .card {box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);}
+        .container, .panel {padding: 0.01em 16px;}
+        .dark-grey {background-color: #616161!important; color: #fff!important;}
+        .text-center {text-align: center;}
+        .ul {list-style-type: none; padding: 0; margin: 0;}
+        .white, .hover-white:hover {color: #000!important; background-color: #fff!important;}
+        .tag {background-color: #000; color: #fff; padding: 5px 10px; border-radius: 5px;}
+        .footer {background-color: #00796b; padding: 20px; color: white; text-align: center;}
+        .subscribe {background-color: #f44336; color: white; padding: 10px; border-radius: 5px; cursor: pointer;}
+        .subscribe:hover {background-color: #c62828;}
+        .social-icons a {margin: 0 10px; color: white; font-size: 24px; transition: transform 0.2s;}
+        .social-icons a:hover {transform: scale(1.2);}
+        .fade-in {animation: fadeIn 1s; opacity: 0; animation-fill-mode: forwards;}
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .comment-section { margin-top: 20px; }
+        .comment { margin: 10px 0; border-bottom: 1px solid #ddd; padding: 10px; }
+    </style>
+</head>
 <body class="light-grey">
 
-<nav style="background: white; margin-bottom: 15px;">
+<nav class="teal lighten-1">
     <div class="nav-wrapper">
-        <a href="index.html" class="brand-logo black-text" style="margin-left: 8vh; font-family: Montserrat; font-size: 35px;">Travel Symphony</a>
+        <a href="index.html" class="brand-logo" style="margin-left: 15px; font-family: Montserrat;">Travel Symphony</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="index.html" class="black-text" style="font-family: Montserrat; outline: none; font-size: 20px">Home</a></li>
+            <li><a href="index.html" class="black-text">Home</a></li>
+            <li><a href="#subscribe" class="black-text">Subscribe</a></li>
         </ul>
     </div>
 </nav>
 
-<div class="content" style="max-width:1400px">
+<div class="content" style="max-width:1400px;">
 <header class="container text-center padding-32"> 
   <h1><b>BLOG</b></h1>
   <p>Welcome to the blog of <span class="black-background">Travel Symphony</span></p>
@@ -117,46 +58,51 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- Blog entries -->
 <div class="w3-col l8 s12">
   <!-- Blog entry -->
-  <div class="card-4 margin white">
-    <img src="Images/Blog/london.jpg" alt="Nature" style="width: 870px; height: 500px;">
+  <div class="card margin white fade-in">
+    <img src="Images/Blog/london.jpg" alt="Nature" class="responsive-img" style="height: 500px;">
     <div class="container">
-      <h3 style="text-align: center;"><b>Sail into Success </b></h3>
-      <h5 style="text-align: center;" >Created:- <span class="opacity">september 7, 2024</span></h5>
-    </div>
-    <div class="container">
-      <p>“Traveling – it leaves you speechless, then turns you into a storyteller.” </p>
+      <h3 class="text-center"><b>Sail into Success</b></h3>
+      <h5 class="text-center">Created: <span class="opacity">September 7, 2024</span></h5>
+      <p>“Traveling – it leaves you speechless, then turns you into a storyteller.”</p>
     </div>
   </div>
-  <h7>
 
   <!-- Blog entry -->
-  <div class="card-4 margin white">
-    <img src="Images/Blog/norway.jpg" alt="Norway" style="width:870px; height: 500px;">
+  <div class="card margin white fade-in">
+    <img src="Images/Blog/norway.jpg" alt="Norway" class="responsive-img" style="height: 500px;">
     <div class="container">
-      <h3 style="text-align: center;" ><b>World's fastest-growing tourism destinations</b></h3>
-      <h5 style="text-align: center;" >Created:- <span class="opacity">sep 2, 2024</span></h5>
-    </div>
-    <div class="container">
-      <p>"If there is one place on the face of earth where all the dreams of living men have found a home from the very earliest days when man began the dream of existence, it is India."
-        </p>
+      <h3 class="text-center"><b>World's Fastest-Growing Tourism Destinations</b></h3>
+      <h5 class="text-center">Created: <span class="opacity">September 2, 2024</span></h5>
+      <p>"If there is one place on the face of earth where all the dreams of living men have found a home from the very earliest days when man began the dream of existence, it is India."</p>
     </div>
   </div>
-<!-- END BLOG ENTRIES -->
+
+  <!-- Comments Section -->
+  <div class="card margin white comment-section">
+    <div class="container">
+      <h4>Comments</h4>
+      <div id="comments"></div>
+      <div>
+        <textarea id="comment" placeholder="Write a comment..." style="width: 100%; height: 60px;"></textarea>
+        <button class="subscribe" onclick="postComment()">Post Comment</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Introduction menu -->
 <div class="w3-col l4">
   <!-- About Card -->
-  <div class="card margin margin-top">
+  <div class="card margin fade-in">
     <img src="Images/Blog/voyager.jpg" style="width:100%; height: 300px;">
     <div class="container white">
       <h4><b>Travel Symphony</b></h4>
-      <p>Just me, myself and I, exploring the universe of uknownment. I have a heart of love and a interest of lorem ipsum and mauris neque quam blog. I want to share my world with you.</p>
+      <p>Just me, myself and I, exploring the universe of the unknown. I want to share my world with you.</p>
     </div>
   </div><hr>
 
   <!-- Popular Cities in India -->
-  <div class="card margin">
+  <div class="card margin fade-in">
     <div class="container w3-padding">
       <h4>Popular Places</h4>
     </div>
@@ -183,17 +129,77 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       </li>
     </ul>
   </div>
+
+  <!-- Subscribe Section -->
+  <div class="card margin fade-in" id="subscribe">
+    <div class="container w3-padding">
+      <h4>Subscribe to Our Newsletter</h4>
+      <p>Stay updated with the latest travel tips and blog posts!</p>
+      <input type="email" placeholder="Enter your email" id="email" required>
+      <button class="subscribe" onclick="subscribe()">Subscribe</button>
+      <p id="subscribe-message" style="color: green; display: none;"></p>
+    </div>
+  </div>
+
+  <!-- Blog Entries About Popular Places -->
+  <div class="card margin fade-in">
+    <div class="container">
+      <h4>Recent Blog Entries</h4>
+      <div class="card margin white">
+        <img src="https://www.andbeyond.com/wp-content/uploads/sites/5/Chhatrapati-Shivaji-Terminus-railway-station-mumbai.jpg" alt="Mumbai" class="responsive-img" style="height: 200px;">
+        <div class="container">
+          <h5><b>Explore Mumbai</b></h5>
+          <h6>Created: <span class="opacity">August 27, 2024</span></h6>
+          <p>“The city never sleeps.”</p>
+        </div>
+      </div>
+      <div class="card margin white">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-4p1hV3eXtB2nTPGINiCdBi7kAxB_iCBIig&s" alt="Goa" class="responsive-img" style="height: 200px;">
+        <div class="container">
+          <h5><b>Sunsets in Goa</b></h5>
+          <h6>Created: <span class="opacity">August 20, 2024</span></h6>
+          <p>“Beaches, sunsets, and good vibes.”</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
-</div><br>
-
+<div class="footer">
+  <h3>TRAVEL SYMPHONY</h3>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a>
+    <a href="https://www.twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a>
+    <a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a>
+  </div>
 </div>
 
+<script>
+function postComment() {
+    const comment = document.getElementById('comment').value;
+    const commentsDiv = document.getElementById('comments');
+    if (comment) {
+        const newComment = document.createElement('div');
+        newComment.className = 'comment';
+        newComment.innerHTML = `<strong>User:</strong> ${comment}`;
+        commentsDiv.appendChild(newComment);
+        document.getElementById('comment').value = '';
+    } else {
+        alert('Please enter a comment before posting.');
+    }
+}
 
-    <footer class="section teal darken-3">
-        <p class="flow-text white-text center middle-align" style="font-family: Montserrat; font-size: 35px;">VOYAGER &copy; 2018</p>
-    </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+function subscribe() {
+    const email = document.getElementById('email').value;
+    if (email) {
+        document.getElementById('subscribe-message').innerText = 'Thank you for subscribing!';
+        document.getElementById('subscribe-message').style.display = 'block';
+        document.getElementById('email').value = ''; // Clear the input
+    } else {
+        alert('Please enter a valid email address.');
+    }
+}
+</script>
 </body>
 </html>
