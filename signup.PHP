@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 // Include the database connection file
@@ -50,9 +50,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['FullName'])) {
     // Close the statement and connection
     $stmt->close();
     $conn->close();
-} else {
-    echo "Invalid request method.";
-    exit();
+}
+
+// Check if the form has been submitted for login
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
+    // Get the email and password from the form
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    
+    // SQL query to check if user exists with the given email
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    
+    if (mysqli_num_rows($result) == 1) {
+        $user = mysqli_fetch_assoc($result);
+        
+        // Verify the hashed password
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['email'] = $email;
+            echo "Login successful!";
+            // Redirect to a dashboard or another page
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            echo "Invalid email or password. Please try again.";
+        }
+    } else {
+        echo "User not found.";
+    }
 }
 ?>
 

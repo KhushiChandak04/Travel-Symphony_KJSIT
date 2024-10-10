@@ -1,16 +1,31 @@
 <?php
-session_start();
+// Check if a session is already active
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Include the database connection file
 include('connect.php');
 
-// Check if the form has been submitted for login
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Email'])) {
-    // Get the email and password from the form
-    $email = mysqli_real_escape_string($conn, $_POST['Email']);
-    $password = mysqli_real_escape_string($conn, $_POST['Password']);
-    
-    // SQL query to check if user exists with the given email
+// Check if the form has been submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve and sanitize form inputs
+    $email = isset($_POST['Email']) ? mysqli_real_escape_string($conn, $_POST['Email']) : '';
+    $password = isset($_POST['Password']) ? $_POST['Password'] : '';
+
+    // Check if all fields are filled
+    if (empty($email) || empty($password)) {
+        echo "Both fields are required.";
+        exit();
+    }
+
+    // Check if the email is valid
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email format.";
+        exit();
+    }
+
+    // Prepare an SQL query to retrieve the user data
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($sql);
 
@@ -18,34 +33,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Email'])) {
         die("Error preparing the statement: " . $conn->error);
     }
 
-    // Bind the email parameter to the SQL query
+    // Bind the parameters to the SQL query
     $stmt->bind_param("s", $email);
+
+    // Execute the query and check if the user exists
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows == 1) {
+    if ($result->num_rows === 1) {
+        // Fetch user data
         $user = $result->fetch_assoc();
-        
-        // Verify the hashed password
+
+        // Verify the password
         if (password_verify($password, $user['password'])) {
-            $_SESSION['email'] = $email;
-            echo "Login successful!";
-            // Redirect to a dashboard or another page
-            header("Location: dashboard.php");
+            // Password is correct, start the session
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['fullname'];
+
+            // Redirect to the dashboard or home page
+            header("Location: index.php");
             exit();
         } else {
-            echo "Invalid email or password. Please try again.";
+            echo "Incorrect password.";
         }
     } else {
-        echo "User not found.";
+        echo "No user found with this email.";
     }
 
     // Close the statement and connection
     $stmt->close();
     $conn->close();
-} else {
-    echo "Invalid request method.";
-    exit();
 }
 ?>
 
@@ -57,138 +74,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Silkscreen&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: white;
-            color: teal;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
-
-        .outer-box {
-            width: 100vw;
-            height: 100vh;
-            background-color: white;
-        }
-
-        .inner-box {
+        .login-container {
             width: 400px;
-            margin: 0 auto;
-            position: relative;
-            top: 40%;
-            transform: translateY(-50%);
-            padding: 20px 40px;
+            margin: 100px auto;
+            padding: 20px;
             background-color: white;
-            backdrop-filter: blur(8px);
-            border-radius: 8px;
-            box-shadow: 2px 2px 5px teal;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        .signup-header h1 {
-            font-size: 2.5rem;
+        h2 {
+            text-align: center;
             color: teal;
         }
-
-        .signup-body {
-            margin: 20px 0;
+        form {
+            display: flex;
+            flex-direction: column;
         }
-
-        .signup-body p {
+        label, input {
             margin: 10px 0;
         }
-
-        .signup-body p label {
-            display: block;
-            font-weight: bold;
-            color: teal;
-        }
-
-        .signup-body p input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid teal;
-            border-radius: 4px;
-            font-size: 1rem;
-            margin-top: 4px;
-            color: teal;
-        }
-
-        .signup-body p input[type="submit"] {
+        input[type="submit"] {
             background-color: teal;
-            border: none;
             color: white;
+            padding: 10px;
+            border: none;
             cursor: pointer;
         }
-
-        .signup-body p input[type="submit"]:hover {
-            background-color: #004d4d;
+        input[type="submit"]:hover {
+            background-color: darkcyan;
         }
-
-        .signup-footer p {
-            color: teal;
+        .signup-link {
             text-align: center;
+            margin-top: 20px;
         }
-
-        .signup-footer p a {
+        .signup-link a {
             color: teal;
-        }
-
-        .circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 100px;
-            background-color: teal;
-            position: absolute;
-            opacity: 0.3;
-        }
-
-        .c1 {
-            top: 100px;
-            left: 30%;
-        }
-
-        .c2 {
-            bottom: 200px;
-            right: 40%;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="outer-box">
-        <div class="inner-box">
-            <header class="signup-header">
-                <h1>Sign In</h1>
-            </header>
-            <main class="signup-body">
-                <form action="login.php" method="post">
-                    <p>
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" placeholder="example@gmail.com" required name="Email"/>
-                    </p>
-                    <p>
-                        <label for="password">Your Password</label>
-                        <input type="password" id="password" placeholder="at least 8 characters" required name="Password"/>
-                    </p>
-                    <p>
-                        <input type="submit" id="submit" value="Login">
-                    </p>
-                </form>
-            </main>
+<div class="login-container">
+    <h2>Login</h2>
+    <form action="Login.php" method="post">
+        <label for="email">Your Email</label>
+        <input type="email" id="email" placeholder="example@gmail.com" required name="Email">
+        
+        <label for="password">Your Password</label>
+        <input type="password" id="password" placeholder="at least 8 characters" required name="Password">
+        
+        <input type="submit" value="Login">
+    </form>
 
-            <footer class="signup-footer">
-                <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
-            </footer>
-        </div>
-        <div class="circle c1"></div>
-        <div class="circle c2"></div>
+    <div class="signup-link">
+        <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
     </div>
+</div>
 
 </body>
 </html>
