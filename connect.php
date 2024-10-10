@@ -1,18 +1,4 @@
 <?php
-<<<<<<< Updated upstream
-// Database connection details
-$servername = "localhost";  // Default XAMPP server
-$username = "root";         // Default XAMPP username
-$password = "Billi4@billu";             // Default XAMPP password is empty
-$dbname = "travel_symphony";  // Replace with your actual database name
-
-// Create a connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection Failed: " . $conn->connect_error);
-=======
 // Start session
 session_start();
 
@@ -35,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database connection details
     $servername = "localhost";
     $username = "root"; // Default username for XAMPP
-    $password = ""; // Default password for XAMPP (empty)
+    $password = "Billi4@billu"; // Default password for XAMPP (empty)
     $dbname = "travel_symphony"; // Replace with your actual database name
 
     // Create a connection
@@ -71,6 +57,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 } else {
     echo "Invalid request method.";
->>>>>>> Stashed changes
 }
 ?>
