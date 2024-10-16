@@ -1,4 +1,4 @@
-<?php
+<?php 
 // Start session if it hasn't been started already
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -84,53 +84,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+
+    <!-- Link to Google Fonts for Varela Round -->
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
     <style>
-        /* Add some basic styling */
+        /* General styling */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Varela Round', sans-serif;
             background-color: #f0f0f0;
         }
         .container {
             width: 400px;
             margin: 100px auto;
-            padding: 20px;
+            padding: 30px;
             background-color: white;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.15);
+            border-radius: 10px;
         }
         h2 {
             text-align: center;
+            color: teal;
             margin-bottom: 20px;
+            font-size: 24px;
         }
         label {
             font-weight: bold;
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
+            color: #333;
         }
         input[type="text"], input[type="email"], input[type="password"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 5px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+            border-color: teal;
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(0,128,128,0.2);
         }
         input[type="submit"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: teal;
             border: none;
             color: white;
             font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
             margin-top: 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
         input[type="submit"]:hover {
-            background-color: #004d4d;
+            background-color: #006666;
         }
         .message {
             color: red;
             text-align: center;
             margin-top: 20px;
+            font-size: 14px;
+        }
+        .message a {
+            color: teal;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .message a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>

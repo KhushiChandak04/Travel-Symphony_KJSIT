@@ -69,54 +69,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>LOGIN</title>
+
+    <!-- Link Google Fonts for Varela Round -->
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
     <style>
         /* Basic styling */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Varela Round', sans-serif;
             background-color: #f0f0f0;
         }
         .container {
             width: 400px;
             margin: 100px auto;
-            padding: 20px;
+            padding: 30px;
             background-color: white;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
         }
         h2 {
             text-align: center;
+            color: teal;
             margin-bottom: 20px;
+            font-size: 24px;
         }
         label {
             font-weight: bold;
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
+            color: #333;
         }
         input[type="email"], input[type="password"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 5px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        input[type="email"]:focus, input[type="password"]:focus {
+            border-color: teal;
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(0,128,128,0.2);
         }
         input[type="submit"], .register-btn {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: teal;
             border: none;
             color: white;
             font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
             margin-top: 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
         input[type="submit"]:hover, .register-btn:hover {
-            background-color: #004d4d;
+            background-color: #006666;
         }
         .message {
             color: red;
             text-align: center;
             margin-top: 20px;
+            font-size: 14px;
         }
         .register-btn {
             text-align: center;
@@ -130,6 +148,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: center;
             display: block;
             margin-top: 20px;
+            text-decoration: none;
+        }
+        .register-link button {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 16px;
         }
     </style>
 </head>
