@@ -74,6 +74,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Error preparing the statement: " . $conn->error);
         }
     } else if (isset($_POST['register'])) {
+        // Check if the email is already in use
+        $check_sql = "SELECT * FROM users WHERE email = ?";
+        $check_stmt = $conn->prepare($check_sql);
+        $check_stmt->bind_param("s", $email);
+        $check_stmt->execute();
+        $check_result = $check_stmt->get_result();
+
+        if ($check_result->num_rows > 0) {
+            die("Email is already registered.");
+        }
+
         // Handle registration process
         $sql = "INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);

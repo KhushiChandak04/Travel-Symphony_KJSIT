@@ -1,80 +1,65 @@
 <?php
-session_start();
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-<<<<<<<< Updated upstream:signup.PHP
-// Include the database connection file
-include('connect.php');
-
-// Check if the form has been submitted
+// Check if the form was submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve and sanitize form inputs
-    $fullname = isset($_POST['FullName']) ? mysqli_real_escape_string($conn, $_POST['FullName']) : '';
-    $email = isset($_POST['Email']) ? mysqli_real_escape_string($conn, $_POST['Email']) : '';
-    $password = isset($_POST['Password']) ? $_POST['Password'] : '';
 
-    // Check if all fields are filled
-    if (empty($fullname) || empty($email) || empty($password)) {
-        echo "All fields are required.";
-        exit();
-    }
+    // Retrieve form inputs
+    $email = isset($_POST['Email']) ? trim($_POST['Email']) : '';
+    $password = isset($_POST['Password']) ? trim($_POST['Password']) : '';
 
-    // Check if the email is valid
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Invalid email format.";
-        exit();
-    }
-
-    // Hash the password for secure storage
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Prepare an SQL query to insert the user data
-    $sql = "INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-
-    if ($stmt === false) {
-        die("Error preparing the statement: " . $conn->error);
-    }
-
-    // Bind the parameters to the SQL query
-    $stmt->bind_param("sss", $fullname, $email, $hashed_password);
-
-    // Execute the query and check if the data was inserted successfully
-    if ($stmt->execute()) {
-        echo "Account created successfully!";
-        // Optionally, redirect to the login page or another page
-        header("Location: login.php");
-        exit();
+    // Check if email and password are filled
+    if (empty($email) || empty($password)) {
+        echo '<div class="message">Please fill in both the email and password fields.</div>';
     } else {
-        echo "Error: Could not create account. " . $stmt->error;
-    }
+        // Database connection details
+        $servername = "localhost";
+        $username = "root"; // Default username for XAMPP
+        $db_password = "Billi4@billu"; // Your actual password for XAMPP
+        $dbname = "travel_symphony"; // Replace with your actual database name
 
-    // Close the statement and connection
-    $stmt->close();
-    $conn->close();
-========
-// Include database connection file
-include('connect.php'); 
+        // Create connection
+        $conn = new mysqli($servername, $username, $db_password, $dbname);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the email and password from the form
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    
-    // SQL query to check if user exists with the given email and password
-    $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
-    $result = mysqli_query($conn, $sql);
-    
-    // Check if the user exists
-    if (mysqli_num_rows($result) == 1) {
-        $_SESSION['email'] = $email;
-        echo "Login successful!";
-        // Redirect to a dashboard or another page
-        header("Location: dashboard.php");
-        exit();
-    } else {
-        echo "Invalid email or password. Please try again.";
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Query to check if the user exists with the provided email
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 1) {
+            // Fetch the user data
+            $user = $result->fetch_assoc();
+
+            // Verify the password
+            if (password_verify($password, $user['password'])) {
+                // Set session variables for the logged-in user
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['fullname'];
+
+                // Redirect to the index page after successful login
+                header("Location: index.php");
+                exit();
+            } else {
+                echo '<div class="message">Incorrect password. Please try again.</div>';
+            }
+        } else {
+            echo '<div class="message">No account found with this email. Please register below.</div>';
+        }
+
+        // Close the statement and connection
+        $stmt->close();
+        $conn->close();
     }
->>>>>>>> Stashed changes:login.php
 }
 ?>
 
@@ -84,226 +69,110 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
+    <title>LOGIN</title>
+
+    <!-- Link Google Fonts for Varela Round -->
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Silkscreen&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Basic styling */
         body {
-            font-family: 'Lato', sans-serif;
-<<<<<<<< Updated upstream:signup.PHP
-            background-color: white;
-            color: teal;
-========
-            background-color: white; /* Changed background to white */
-            color: teal; /* Set text color to teal */
->>>>>>>> Stashed changes:login.php
+            font-family: 'Varela Round', sans-serif;
+            background-color: #f0f0f0;
         }
-
-        .outer-box {
-            width: 100vw;
-            height: 100vh;
-<<<<<<<< Updated upstream:signup.PHP
-            background-color: white;
-========
-            background-color: white; /* Changed background to white */
->>>>>>>> Stashed changes:login.php
-        }
-
-        .inner-box {
+        .container {
             width: 400px;
-            margin: 0 auto;
-            position: relative;
-            top: 40%;
-            transform: translateY(-50%);
-            padding: 20px 40px;
-<<<<<<<< Updated upstream:signup.PHP
+            margin: 100px auto;
+            padding: 30px;
             background-color: white;
-            backdrop-filter: blur(8px);
-            border-radius: 8px;
-            box-shadow: 2px 2px 5px teal;
-========
-            background-color: white; /* White background */
-            backdrop-filter: blur(8px);
-            border-radius: 8px;
-            box-shadow: 2px 2px 5px teal; /* Updated shadow color to teal */
->>>>>>>> Stashed changes:login.php
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
         }
-
-        .signup-header h1 {
-            font-size: 2.5rem;
-<<<<<<<< Updated upstream:signup.PHP
+        h2 {
+            text-align: center;
             color: teal;
-========
-            color: teal; /* Teal header color */
->>>>>>>> Stashed changes:login.php
+            margin-bottom: 20px;
+            font-size: 24px;
         }
-
-        .signup-header p {
-            font-size: 0.95rem;
-<<<<<<<< Updated upstream:signup.PHP
-            color: teal;
-========
-            color: teal; /* Teal paragraph color */
->>>>>>>> Stashed changes:login.php
-            margin-top: 5px;
-        }
-
-        .signup-body {
-            margin: 20px 0;
-        }
-
-        .signup-body p {
-            margin: 10px 0;
-        }
-
-        .signup-body p label {
-            display: block;
+        label {
             font-weight: bold;
-<<<<<<<< Updated upstream:signup.PHP
-            color: teal;
-========
-            color: teal; /* Teal label color */
->>>>>>>> Stashed changes:login.php
+            display: block;
+            margin-top: 15px;
+            color: #333;
         }
-
-        .signup-body p input {
+        input[type="email"], input[type="password"] {
             width: 100%;
-            padding: 10px;
-<<<<<<<< Updated upstream:signup.PHP
-            border: 2px solid teal;
-            border-radius: 4px;
-            font-size: 1rem;
-            margin-top: 4px;
-            color: teal;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
         }
-
-        .signup-body p input[type="submit"] {
+        input[type="email"]:focus, input[type="password"]:focus {
+            border-color: teal;
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(0,128,128,0.2);
+        }
+        input[type="submit"], .register-btn {
+            width: 100%;
+            padding: 12px;
             background-color: teal;
-========
-            border: 2px solid teal; /* Teal border color */
-            border-radius: 4px;
-            font-size: 1rem;
-            margin-top: 4px;
-            color: teal; /* Teal text color */
-        }
-
-        .signup-body p input[type="submit"] {
-            background-color: teal; /* Teal background for submit button */
->>>>>>>> Stashed changes:login.php
             border: none;
             color: white;
+            font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
-
-        .signup-body p input[type="submit"]:hover {
-<<<<<<<< Updated upstream:signup.PHP
-            background-color: #004d4d;
+        input[type="submit"]:hover, .register-btn:hover {
+            background-color: #006666;
         }
-
-        .signup-footer p {
-            color: teal;
-========
-            background-color: #004d4d; /* Darker teal on hover */
-        }
-
-        .signup-footer p {
-            color: teal; /* Teal footer text */
->>>>>>>> Stashed changes:login.php
+        .message {
+            color: red;
             text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
         }
-
-        .signup-footer p a {
-<<<<<<<< Updated upstream:signup.PHP
-            color: teal;
-========
-            color: teal; /* Teal link color */
->>>>>>>> Stashed changes:login.php
+        .register-btn {
+            text-align: center;
+            background-color: gray;
+            margin-top: 10px;
         }
-
-        .circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 100px;
-<<<<<<<< Updated upstream:signup.PHP
-            background-color: teal;
-========
-            background-color: teal; /* Teal background for circles */
->>>>>>>> Stashed changes:login.php
-            position: absolute;
-            opacity: 0.3;
+        .register-btn:hover {
+            background-color: darkgray;
         }
-
-        .c1 {
-            top: 100px;
-            left: 30%;
+        .register-link {
+            text-align: center;
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
         }
-
-        .c2 {
-            bottom: 200px;
-            right: 40%;
+        .register-link button {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h2>Login</h2>
+        <form action="login.php" method="post">
+            <label for="email">Email</label>
+            <input type="email" name="Email" id="email" required>
 
-    <div class="outer-box">
-        <div class="inner-box">
-            <header class="signup-header">
-<<<<<<<< Updated upstream:signup.PHP
-                <h1>Sign Up</h1>
-            </header>
-            <main class="signup-body">
-                <!-- Updated the action to point to signup.php -->
-                <form action="signup.php" method="post">
-                    <p>
-                        <label for="fullname">Full Name</label>
-                        <input type="text" id="fullname" placeholder="Enter your name" required name="FullName"/>
-                    </p>
-                    <p>
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" placeholder="example@gmail.com" required name="Email"/>
-                    </p>
-                    <p>
-                        <label for="password">Your Password</label>
-                        <input type="password" id="password" placeholder="at least 8 characters" required name="Password"/>
-========
-                <h1>Sign in</h1>
-            </header>
-            <main class="signup-body">
-                <form action ="connect.php" method="post">
+            <label for="password">Password</label>
+            <input type="password" name="Password" id="password" required>
 
-                    <p>
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" placeholder="example@gmail.com" required name ="Email"/>
-                    </p>
-                    <p>
-                        <label for="password">Your Password</label>
-                        <input type="password" id="password" placeholder="at least 8 characters" required name ="Password"/>
->>>>>>>> Stashed changes:login.php
-                    </p>
-                    <p>
-                        <input type="submit" id="submit" value="Create Account">
-                    </p>
-                </form>
-            </main>
+            <input type="submit" value="Login">
 
-            <footer class="signup-footer">
-<<<<<<<< Updated upstream:signup.PHP
-                <p>Already have an Account? <a href="login.php">Login</a></p>
-========
->>>>>>>> Stashed changes:login.php
-            </footer>
-
-        </div>
-        <div class="circle c1"></div>
-        <div class="circle c2"></div>
+            <!-- If the user is not registered, show the Register button -->
+            <a href="signup.php" class="register-link">
+                <button type="button" class="register-btn">Register</button>
+            </a>
+        </form>
     </div>
-
 </body>
 </html>

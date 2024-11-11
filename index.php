@@ -55,17 +55,20 @@ session_start(); // Start the session
                 </a>
 
                 <?php if (isset($_SESSION['user_name'])): ?>
-                    <!-- If the user is logged in, display the username -->
-                    <li>Welcome, <?php echo htmlspecialchars($_SESSION['user_name']); ?></li>
-                    <a href="logout.php">
-                        <li>Log Out</li>
-                    </a>
-                <?php else: ?>
-                    <!-- If the user is not logged in, display the Login link -->
-                    <a class="login" href="Login.php">
-                        <li>Log In</li>
-                    </a>
-                <?php endif; ?>
+                <!-- If the user is logged in, display the username -->
+                <li style="font-size: 22px; font-family: 'Varela Round', sans-serif;">
+                Welcome, <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                </li>
+                <a href="logout.php">
+                <li>Log Out</li>
+                </a>
+<?php else: ?>
+    <!-- If the user is not logged in, display the Login link -->
+    <a class="login" href="Login.php">
+        <li>Log In</li>
+    </a>
+<?php endif; ?>
+
             </ul>
         </div>
     </header>
