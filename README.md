@@ -1,7 +1,4 @@
 
-
-https://github.com/user-attachments/assets/9e6c00e0-3c38-4c99-9ae8-0d6a38e16fa9
-
 # Travel Symphony
 ## Welcome to Travel Symphony!
 
@@ -10,3 +7,12 @@ Our approach involved a blend of user testing, feedback analysis, and market res
 Results from user testing showed that Travel Symphony reduced the perceived complexity of trip planning. Users valued the platform’s intuitive interface, especially the chatbot, which provided real-time assistance and personalized recommendations. The curated recommendations feature was particularly well-received, offering tailored suggestions that simplified decision-making.
 Based on these findings, we conclude that Travel Symphony effectively addresses user pain points, offering a comprehensive travel solution that empowers users to plan confidently and creatively. We recommend further refining the platform’s chatbot and recommendation algorithms to enhance personalization and satisfaction.
 Overall, Travel Symphony demonstrates a promising approach to transforming travel planning. By blending functionality with a user-centered design, it positions travel as not only accessible but an exciting opportunity for discovery. This project validates Travel Symphony’s potential to reimagine travel planning as an experience in itself, providing users with both practicality and inspiration.
+
+## Video Clip Showcasing Demo of our Project
+
+https://github.com/user-attachments/assets/9e6c00e0-3c38-4c99-9ae8-0d6a38e16fa9
+
+## Authors
+1) Khushi Chandak
+2) Mahek Raigagla
+3) Shrusti Gada 
