@@ -9,7 +9,7 @@ session_start(); // Start the session
     <title>Travel Symphony | Best Prices. Best Holidays.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Khushi Chandak, Shrushti Gada, Mahek Raigagla">
-    <meta name="keywords" content="voyager, voyager.com, online tickets booking, flight tickets, bus tickets, train tickets">
+    <meta name="keywords" content="Travel Symphony, Travel_symphony.com, online tickets booking, flight tickets, bus tickets, train tickets">
     <link rel="stylesheet" href="css/index.css">
     <link rel="icon" href="images/Logos/logo.ico" type="image">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
@@ -27,7 +27,7 @@ session_start(); // Start the session
 
     <header>
         <div class="logo">
-            <h1 class="voyager"></h1>
+            <h1 class="Travel Symphony"></h1>
             <h3>Best Prices <span class="dot">.</span> Best Holidays <span class="dot">.</span></h3>
             <ul class="sociallist">
                 <a href="index.html">
